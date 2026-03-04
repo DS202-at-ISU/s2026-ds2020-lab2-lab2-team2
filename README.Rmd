@@ -45,7 +45,10 @@ str(ames)
 
 Step 2 Result:
 
-
+```{r}
+ames$`Sale Price`
+```
+Sale Price is the main variable in the dataset. It's the main variable we want to predict with given unseen data. Most other variables in the dataset will be directly correlated with the sale price of the property. 
 
 
 
@@ -99,7 +102,9 @@ Shashank Result:
 
 Pablo Result:
 
+```{r}
 
+```
 
 
 
