@@ -26,6 +26,19 @@ head(ames)
 ```{r}
 names(ames)
 ```
+<<<<<<< HEAD
+
+
+```{r}
+glimpse(ames)
+```
+
+
+```{r}
+str(ames)
+```
+=======
+>>>>>>> 9d986840151f13895dcca2c49ec0f47e5565c255
 
 
 ```{r}
@@ -37,7 +50,7 @@ glimpse(ames)
 str(ames)
 ```
 
-
+As a team, we inspected the ames dataset using glimpse(), names(), and str(). We found that the dataset contains 16 variables: Parcel ID, Address, Style, Occupancy, Sale Date, Sale Price, Multi Sale, YearBuilt, Acres, TotalLivingArea (sf), Bedrooms, FinishedBsmtArea (sf), LotArea(sf), AC, FirePlace, and Neighborhood. These variables include character variables such as identifiers and labels, factor variables such as housing style and neighborhood, one date variable (Sale Date), and several numeric variables such as Sale Price, YearBuilt, lot size, and living area. Based on the variable names and sample values, the dataset records property sale information, structural features, lot size, and location details for residential properties in Ames. We would expect identifiers and addresses to mostly appear as text, categorical variables to come from a limited set of repeated categories, sale dates to be valid dates, and numeric variables such as sale price, acreage, living area, and lot area to be nonnegative values. We also noticed that some variables contain missing values (NA), which may need to be considered during later analysis.
 
 
 
@@ -45,7 +58,10 @@ str(ames)
 
 Step 2 Result:
 
-
+```{r}
+ames$`Sale Price`
+```
+Sale Price is the main variable in the dataset. It's the main variable we want to predict with given unseen data. Most other variables in the dataset will be directly correlated with the sale price of the property. 
 
 
 
@@ -128,7 +144,9 @@ Shashank Result:
 
 Pablo Result:
 
+```{r}
 
+```
 
 
 
