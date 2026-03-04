@@ -55,7 +55,36 @@ Step 2 Result:
 
 
 Step 3 Result:
+```{R}
+price <-ames$`Sale Price`
+range(ames[["Sale Price"]], na.rm = FALSE)
 
+library(ggplot2)
+ggplot(ames, aes(x = price)) +
+  geom_histogram(binwidth = 1000000, color = "blue", fill = "white") +
+  labs(title = "Sales Price",
+       x = "Price ($)",
+       y = "Frequency")
+
+
+Q1 <- quantile(ames$`Sale Price`, 0.25, na.rm = TRUE)
+Q3 <- quantile(ames$`Sale Price`, 0.75, na.rm = TRUE)
+IQR_value <- IQR(ames$`Sale Price`, na.rm = TRUE)
+
+lower_bound <- Q1 - 1.5 * IQR_value
+upper_bound <- Q3 + 1.5 * IQR_value
+
+ames_no_outliers <- ames[
+  ames$`Sale Price` >= lower_bound &
+  ames$`Sale Price` <= upper_bound,
+]
+
+ggplot(ames_no_outliers, aes(x = `Sale Price`)) +
+  geom_histogram(binwidth = 100000, color = "blue", fill = "white") +
+  labs(title = "Sales Price",
+       x = "Price ($)",
+       y = "Frequency")
+```
 
 
 
@@ -67,7 +96,7 @@ Step 3 Result:
 
 
 Step 4 Result:
-Nicolas Result:
+Nicolas Result: acres
 
 
 
