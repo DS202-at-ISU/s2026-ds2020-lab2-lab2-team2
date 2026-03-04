@@ -127,7 +127,62 @@ Nicole Result:
 
 
 
-Scott Result:
+Scott Result: Finished Basement Area
+
+```{r}
+summary(ames$`FinishedBsmtArea (sf)`)
+```
+
+```{r}
+hist(ames$`FinishedBsmtArea (sf)`,
+     main = "Histogram of Finished Basement Area",
+     xlab = "Finished Basement Area (sq ft)",
+     col = "lightblue",
+     border = "black")
+```
+
+```{r}
+boxplot(ames$`FinishedBsmtArea (sf)`,
+        main = "Boxplot of Finished Basement Area",
+        horizontal = TRUE,
+        col = "lightgreen")
+```
+
+```{r}
+plot(ames$`FinishedBsmtArea (sf)`,
+     ames$`Sale Price`,
+     main = "Finished Basement Area vs Sale Price",
+     xlab = "Finished Basement Area (sq ft)",
+     ylab = "Sale Price",
+     pch = 19,
+     col = "steelblue")
+```
+The variable Finished Basement Area (sf) measures the square footage of finished basement space in each home. The histogram shows that the distribution is right-skewed, with many homes having smaller finished basement areas and fewer homes having very large finished basements. The boxplot indicates the presence of some high-value outliers. The scatterplot comparing finished basement area and sale price suggests a positive relationship: homes with larger finished basement areas tend to have higher sale prices. However, the relationship does not appear perfectly linear, and other factors likely also influence sale price.
+```{r}
+cor(ames$`FinishedBsmtArea (sf)`,
+    ames$`Sale Price`,
+    use = "complete.obs")
+```
+This value shows that there is not a strong correlation between having a finished basement and the sale price increasing.
+```{r}
+ames$BasementFinished <- ifelse(
+  ames$`FinishedBsmtArea (sf)` > 0,
+  "Finished",
+  "Not Finished"
+)
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(ames, aes(x = BasementFinished)) +
+  geom_bar(fill = "steelblue") +
+  labs(title = "Finished vs Not Finished Basements",
+       x = "Basement Status",
+       y = "Number of Homes") +
+  theme_minimal()
+```
+The bar chart shows the number of homes with finished versus unfinished basements. Most homes in the dataset have a finished basement, while a smaller portion have no finished basement area. This suggests that finished basements are common among properties in Ames and may contribute to differences in sale price.
 
 
 
