@@ -11,6 +11,82 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Lab report #1
 
+Step 1 Result:
+```{R}
+library(classdata)
+ames = ames
+View(ames)
+```
+
+
+
+
+
+
+
+
+Step 2 Result:
+
+
+
+
+
+
+
+
+
+
+Step 3 Result:
+
+
+
+
+
+
+
+
+
+
+
+Step 4 Result:
+Nicolas Result:
+
+
+
+
+
+
+
+Nicole Result:
+
+
+
+
+
+
+Scott Result:
+
+
+
+
+
+
+
+Shashank Result:
+
+
+
+
+
+
+Pablo Result:
+
+
+
+
+
+
+
 Follow the instructions posted at https://ds202-at-isu.github.io/labs.html for the lab assignment. The work is meant to be finished during the lab time, but you have time until Monday evening to polish things.
 
 Include your answers in this document (Rmd file). Make sure that it knits properly (into the md file). Upload both the Rmd and the md file to your repository.  
