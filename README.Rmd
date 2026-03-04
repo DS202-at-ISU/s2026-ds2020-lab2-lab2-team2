@@ -16,7 +16,6 @@ Step 1 Result:
 library(classdata)
 library(tidyverse)
 ames = ames
-View(ames)
 ```
 
 ```{r}
@@ -26,19 +25,11 @@ head(ames)
 ```{r}
 names(ames)
 ```
-<<<<<<< HEAD
 
 
 ```{r}
 glimpse(ames)
 ```
-
-
-```{r}
-str(ames)
-```
-=======
->>>>>>> 9d986840151f13895dcca2c49ec0f47e5565c255
 
 
 ```{r}
@@ -74,15 +65,18 @@ Step 3 Result:
 ```{R}
 price <-ames$`Sale Price`
 range(ames[["Sale Price"]], na.rm = FALSE)
+mean(ames$`Sale Price`)
+median(ames$`Sale Price`)
 
 library(ggplot2)
+#Graph with outliers
 ggplot(ames, aes(x = price)) +
   geom_histogram(binwidth = 1000000, color = "blue", fill = "white") +
   labs(title = "Sales Price",
        x = "Price ($)",
        y = "Frequency")
 
-
+#Graph without outliers
 Q1 <- quantile(ames$`Sale Price`, 0.25, na.rm = TRUE)
 Q3 <- quantile(ames$`Sale Price`, 0.75, na.rm = TRUE)
 IQR_value <- IQR(ames$`Sale Price`, na.rm = TRUE)
@@ -101,7 +95,7 @@ ggplot(ames_no_outliers, aes(x = `Sale Price`)) +
        x = "Price ($)",
        y = "Frequency")
 ```
-
+The general pattern of the sale price graph is it is skewed to the right. That means majority of the houses sold are going to be in the cheaper range. There are also a few severe outliers. The range of this dataset consists of the most expensive sale being 20.5 million and the lowest sale being 0. The average is is 1,017,479. The median being 170,900.
 
 
 
