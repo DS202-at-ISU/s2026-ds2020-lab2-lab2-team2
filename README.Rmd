@@ -129,10 +129,67 @@ Scott Result:
 
 
 
-Shashank Result:
+Shashank Result: YearBuilt
+
+
+Range of the Variable / Description of the Pattern
+```{r}
+summary(ames$YearBuilt)
+```
+
+
+```{r}
+range(ames$YearBuilt, na.rm = TRUE)
+```
 
 
 
+
+YearBuilt (solo) Plot
+```{r}
+ggplot(ames, aes(x = YearBuilt)) +
+  geom_histogram(bins = 30) +
+  labs(
+    title = "Distribution of Year Built",
+    x = "Year Built",
+    y = "Count"
+  )
+```
+
+
+
+
+
+YearBuilt vs. Sale Price
+```{r}
+ggplot(ames, aes(x = YearBuilt, y = `Sale Price`)) +
+  geom_point(alpha = 0.5) +
+  labs(
+    title = "Sale Price vs Year Built",
+    x = "Year Built",
+    y = "Sale Price"
+  )
+```
+
+
+
+
+
+
+Does YearBuilt Describe any Oddities Discovered in 3?
+```{r}
+ames %>%
+  filter(`Sale Price` == 0) %>%
+  select(`Sale Price`, YearBuilt, Address, `Multi Sale`, Occupancy, Neighborhood) %>%
+  head(15)
+```
+
+
+For my individual investigation, I chose YearBuilt as a variable that might be related to Sale Price. Based on the summary statistics, YearBuilt ranges from 0 to 2022, with a median of 1978 and a mean of 1976. Most homes in the dataset seem to have been built between the mid-1900s and early 2000s, since the first quartile is 1956 and the third quartile is 2002. The histogram shows that a large portion of the homes were built in more recent decades, especially from around the 1950s onward, while there are fewer very old homes. One thing that stands out, though, is that the minimum value is 0, which is clearly not a real construction year. That likely means some records are missing or entered incorrectly, so YearBuilt = 0 should be treated as an odd value rather than a real year.
+
+To look at the relationship with the main variable, I made a scatterplot of Sale Price versus YearBuilt. In general, there seems to be a slight positive relationship, where newer homes tend to sell for more than older homes. At the same time, the relationship is not super strong, since there is still a lot of spread in sale prices across many different build years. The plot also has a few extremely large sale price outliers, which make most of the other points bunch together near the bottom of the graph. Because of that, the overall trend is harder to see clearly, but it still looks like newer homes are often associated with higher prices.
+
+I also checked whether YearBuilt helps explain the oddity from Step 3, which was that some homes have Sale Price = 0. Looking at those rows, the zero-price homes were built across a wide range of years, including 1950, 1951, 1955, 1960, 1966, 1972, 1975, 1992, 1995, and 1997. Since those zero-price sales are not all concentrated in one time period, YearBuilt does not seem to explain that oddity very well. In other words, the homes with zero sale price are not all especially old or especially new. That makes it more likely that the zero values are due to something else, such as unusual transaction records or missing/placeholder sale data.
 
 
 
