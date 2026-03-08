@@ -50,7 +50,7 @@ As a team, we inspected the ames dataset using glimpse(), names(), and str(). We
 Step 2 Result:
 
 ```{r}
-ames$`Sale Price`
+head(ames$`Sale Price`)
 ```
 Sale Price is the main variable in the dataset. It's the main variable we want to predict with given unseen data. Most other variables in the dataset will be directly correlated with the sale price of the property. 
 
@@ -251,10 +251,82 @@ I also checked whether YearBuilt helps explain the oddity from Step 3, which was
 Pablo Result:
 
 ```{r}
+ames_clean <- ames |>
+  group_by(`Multi Sale`, `Sale Price`) |>
+  mutate(
+    units_in_sale = n(),
+    adjusted_price = ifelse(
+      !is.na(`Multi Sale`),
+      `Sale Price` / units_in_sale,
+      `Sale Price`
+    )
+  ) |>
+  ungroup()
 
+
+ames_clean <- ames_clean |>
+  filter(
+    !is.na(`TotalLivingArea (sf)`),
+    !is.na(`Sale Price`),
+  )
+
+ames_clean <- ames_clean |>
+  filter(
+    adjusted_price > 50,
+    `TotalLivingArea (sf)` > 0,  
+  )
+
+view(ames_clean)
 ```
 
+On first glance, the dataset seemed to have many outliers with extraordinarily high sale prices for the given property. On further inspection, however, it was determined that entries in this dataset that were bought as a package are still listed individually, only with the Multi Sale flag set to 'Y'. As a result, the package sales with many properties being bought at once listed each property as having the sale price of the entire package. This skews the median sale price higher and makes data analysis and visualization difficult. To remedy this, I mutated the dataset to append an adjusted_price variable that divides the total sale price by the number of units sold to get an average property sale price for each unit. This only affects entries with a non null Multi Sale feature. Additionally, as part of the cleaning process, I filtered out entries with null / nonzero TotalLivingArea or null Sale Price and only saved entries with an adjusted_price of more than 50, to avoid questionable outliers. 
 
+```{r}
+ggplot(data = ames_clean, aes(x = `TotalLivingArea (sf)`)) +
+  geom_histogram(binwidth = 100)
+```
+The result of the data cleaning is a satisfactory right skewed histogram that shows most properties as having between 1000 and 2000 square feet of total living area. 
+```{r}
+# priceHist <- filter(ames_clean, `adjusted_price` > 900)
+ggplot(data = ames, aes(x = `Sale Price`)) +
+  geom_histogram(binwidth = 10000)
+
+ggplot(data = ames_clean, aes(x = `adjusted_price`)) +
+  geom_histogram(binwidth = 10000)
+
+outlier <- ames_clean
+  # filter(`adjusted_price` < 50000)
+outlier |>
+  select(Address, Style, `Sale Date`, `Sale Price`, `Multi Sale`, `adjusted_price`) |>
+  arrange(`adjusted_price`) |>
+  view()
+
+multi_sales_collapsed <- ames_clean |>
+  filter(`Multi Sale` == "Y") |>
+  group_by(`Sale Date`, `Sale Price`) |>
+  summarise(
+    address_example = first(Address),
+    units_in_sale = n(),
+    average_price = first(adjusted_price),
+    .groups = "drop"
+  ) |>
+  filter(units_in_sale > 1) |>
+  arrange(desc(`units_in_sale`))
+head(multi_sales_collapsed, 15)
+```
+The before and after histograms of the Sale Price also demonstrate the effect of the data cleaning. The second histogram avoids the outlier issues that the original dataset has, namely the huge amount of properties with a sale price of 0 that throws off the scale of the chart, and the two large package sales of $14.2m and $20.5m that has a similar effect. The largest package sales can be seen in the dataframe above. Note that the cleaned histogram sees large spikes in count at $109k and $98k due to the two largest package sales that include 188 and 144 units in sale respectively. 
+
+```{r}
+ggplot(data = ames, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+ggplot(data = ames_clean, aes(x = `TotalLivingArea (sf)`, y = `adjusted_price`)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+The end result is that we can observe a positive correlation between TotalLivingArea and adjusted_price in the scatterplot with cleaned data, as expected. As a property gets bigger, it's price should increase as it's more desirable. The scatterplots using both the original dataset and the cleaned dataset are provided as reference.
 
 
 
