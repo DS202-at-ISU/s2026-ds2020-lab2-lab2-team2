@@ -106,7 +106,7 @@ The general pattern of the sale price graph is it is skewed to the right. That m
 
 
 Step 4 Result:
-Nicolas Result: acres s
+Nicolas Result: acres 
 
 
 
