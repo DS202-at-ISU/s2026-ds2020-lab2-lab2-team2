@@ -108,8 +108,43 @@ The general pattern of the sale price graph is it is skewed to the right. That m
 Step 4 Result:
 Nicolas Result: acres 
 
+```{R}
+acres = ames$Acres
+summary(acres)
+range(ames$Acres, na.rm = TRUE)
+sd(acres, na.rm = TRUE)
+```
+The houses sold in Ames have an acre range of 0 to 12.012 acres. With 0 being the least amount of acres of a house being sold and 12.012 being the most. The mean amount of acres per home sold is 0.2631 acres. The median amount is 0.22. The standard deviation between the houses vary about 0.345 acres. 
 
+```{R}
+library(ggplot2)
+ggplot(ames, aes(x = acres)) +
+  geom_histogram(binwidth = 0.2, color = "blue", fill = "white", na.rm = TRUE) +
+  labs(title = "Sales in consideration to Acres",
+       x = "Number of Acres",
+       y = "Frequency")
+```
+This graph is skewed to the right, so most of the homes sold have a lower amount of acres. While there are few homes that got sold with a higher amount of acres. It is also unimodal only having one peak at around 0.2 acres. 
 
+```{R}
+library(ggplot2)
+#graph without outliers
+ggplot(ames, aes(x = acres, y = price)) +
+  geom_point(color = "blue", na.rm = TRUE) +
+  geom_smooth(method = "lm") +
+  coord_cartesian(ylim = c(0, max(2000000, na.rm = TRUE))) +
+  labs(x = "Acres", y = "Sale Price", 
+       title = "Sale Price vs Acres")
+
+#graph with outliers
+ggplot(ames, aes(x = acres, y = price)) +
+  geom_point(color = "blue", na.rm = TRUE) +
+  geom_smooth(method = "lm") +
+  coord_cartesian(ylim = c(0, max(price, na.rm = TRUE))) +
+  labs(x = "Acres", y = "Sale Price", 
+       title = "Sale Price vs Acres")
+```
+This scatter plot shows that most of the houses sold are about $75,000 or less and are anywhere from 0 to about 1 acres. Both graphs with and without outliers are both right skewed just like the graphs in part 3. The outliers in part 3 do have more of an effect on the graph than they do in part 4 since the outliers, even though the sold for more, are in that low acre range. While in part 3 the graph was looking at the frequency of the prices of homes sold. 
 
 
 
