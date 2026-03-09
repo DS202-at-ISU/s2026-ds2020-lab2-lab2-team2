@@ -11,11 +11,19 @@ library(tidyverse)
 ```
 
     ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+<<<<<<< HEAD
     ## ✔ dplyr     1.1.4     ✔ readr     2.1.6
     ## ✔ forcats   1.0.1     ✔ stringr   1.6.0
     ## ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
     ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.2
     ## ✔ purrr     1.2.1     
+=======
+    ## ✔ dplyr     1.1.3     ✔ readr     2.1.4
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+    ## ✔ ggplot2   3.4.3     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+    ## ✔ purrr     1.0.2     
+>>>>>>> 7d8913cef81dc7406f4dbcc2e10ab87179748884
     ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
@@ -315,8 +323,7 @@ nicolePlot1 <- ggplot(aes(x= Bedrooms), data = ames) +
 nicolePlot1
 ```
 
-    ## Warning: Removed 447 rows containing non-finite outside the scale range
-    ## (`stat_count()`).
+    ## Warning: Removed 447 rows containing non-finite values (`stat_count()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
@@ -359,12 +366,16 @@ nicolePlot3 <- ggplot(amesOutliers, aes(x = Bedrooms, y = `Sale Price`)) +
 nicolePlot3
 ```
 
+<<<<<<< HEAD
     ## Ignoring unknown labels:
     ## • xlab : "Number of Bedrooms"
     ## • ylab : "Sale Price (USD)"
 
     ## Warning: Removed 24 rows containing missing values or values outside the scale range
     ## (`geom_point()`).
+=======
+    ## Warning: Removed 24 rows containing missing values (`geom_point()`).
+>>>>>>> 7d8913cef81dc7406f4dbcc2e10ab87179748884
 
 ![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
@@ -486,8 +497,7 @@ ggplot(ames, aes(x = YearBuilt)) +
   )
 ```
 
-    ## Warning: Removed 447 rows containing non-finite outside the scale range
-    ## (`stat_bin()`).
+    ## Warning: Removed 447 rows containing non-finite values (`stat_bin()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
@@ -503,8 +513,7 @@ ggplot(ames, aes(x = YearBuilt, y = `Sale Price`)) +
   )
 ```
 
-    ## Warning: Removed 447 rows containing missing values or values outside the scale range
-    ## (`geom_point()`).
+    ## Warning: Removed 447 rows containing missing values (`geom_point()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
 
@@ -695,11 +704,9 @@ ggplot(data = ames, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-    ## Warning: Removed 447 rows containing non-finite outside the scale range
-    ## (`stat_smooth()`).
+    ## Warning: Removed 447 rows containing non-finite values (`stat_smooth()`).
 
-    ## Warning: Removed 447 rows containing missing values or values outside the scale range
-    ## (`geom_point()`).
+    ## Warning: Removed 447 rows containing missing values (`geom_point()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
 
