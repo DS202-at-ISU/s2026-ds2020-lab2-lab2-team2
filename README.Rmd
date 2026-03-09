@@ -116,6 +116,52 @@ Nicolas Result: acres
 
 Nicole Result:
 
+```{r}
+unique(ames$Bedrooms)
+```
+
+
+```{r}
+ggplot(aes(x= Bedrooms), data = ames) +
+  geom_bar(na.rm = T) +
+  geom_text(stat = 'count', aes(label = after_stat(count), vjust = -.5)) +
+  labs(
+    title = 'Number of Bedrooms',
+    x = "Number of Bedrooms")
+
+```
+
+The distribution of the number of bedrooms is approximately bell shaped with the mode being 3 bedrooms. There are 39 houses with 0 bedrooms. The maximum number of bedrooms is 10. 
+
+```{r fig.height = 7}
+filteredAmes <- ames[ames$`Sale Price`<= 1000000 & !is.na(ames$Bedrooms) & ames$`Sale Price`!= 0, ]
+
+ggplot(filteredAmes, aes(x = factor(Bedrooms), y = `Sale Price`)) +
+  geom_boxplot(na.rm = TRUE) +
+  coord_cartesian(ylim = c(0, 600000)) +
+  labs(
+    x = 'Number of Bedrooms',
+    y = 'Sale Price (USD)',
+    title = 'Sale Price Boxplots: Number of Bedrooms'
+  )
+```
+This diagram shows that the median sale prices of Ames houses generally increase with the number of bedrooms. However, houses with 6 or 7 bedrooms had a lower median sale price than houses with 5 or 8 bedrooms. 8 bedroom houses had the highest median sale price and the largest IQR of sale prices. Houses with 1, 2, 3, or 7 bedrooms all showed fairly small IQRs. There are several outliers on the high end (sale price >= $1,000,000) that are not displayed in this chart for visualization purposes.
+
+```{r}
+amesOutliers <- ames[ames$`Sale Price` >= 1000000, ]
+ggplot(amesOutliers, aes(x = Bedrooms, y = `Sale Price`)) +
+  geom_point() +
+  labs(
+    title = 'Ames Housing Sale Prices (>= $1,000,000) vs Number of Bedrooms',
+    xlab = 'Number of Bedrooms',
+    ylab = 'Sale Price (USD)',
+  )
+```
+
+There does not appear to be a relationship between the number of bedrooms and the sale price of houses that sold for over $1,000,000.
+
+
+
 
 
 
