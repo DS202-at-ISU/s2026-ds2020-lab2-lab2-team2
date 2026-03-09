@@ -10,12 +10,25 @@ library(classdata)
 library(tidyverse)
 ```
 
+<<<<<<< HEAD
     ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
     ## ✔ dplyr     1.1.4     ✔ readr     2.1.6
     ## ✔ forcats   1.0.1     ✔ stringr   1.6.0
     ## ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
     ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.2
     ## ✔ purrr     1.2.1     
+=======
+    ## Warning: package 'tidyverse' was built under R version 4.5.2
+
+    ## Warning: package 'lubridate' was built under R version 4.5.2
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+    ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.1.0     
+>>>>>>> 114eba79dc1fc9b199e25a5bf6b67abcc89fe4b6
     ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
@@ -143,6 +156,7 @@ considered during later analysis.
 Step 2 Result:
 
 ``` r
+<<<<<<< HEAD
 ames$`Sale Price`
 ```
 
@@ -1013,6 +1027,12 @@ ames$`Sale Price`
     ## [6913] 20500000   220000   110000   250000     3800        0   240000   256000
     ## [6921]   210000   326000   220000        0   137000   143500   200000        0
     ## [6929]   180000   200000   233000   340000   412000        0   195000
+=======
+head(ames$`Sale Price`)
+```
+
+    ## [1] 181900 127100      0 245000 449664 368000
+>>>>>>> 114eba79dc1fc9b199e25a5bf6b67abcc89fe4b6
 
 Sale Price is the main variable in the dataset. It’s the main variable
 we want to predict with given unseen data. Most other variables in the
@@ -1083,7 +1103,163 @@ Step 4 Result: Nicolas Result: acres
 
 Nicole Result:
 
+<<<<<<< HEAD
 Scott Result:
+=======
+``` r
+unique(ames$Bedrooms)
+```
+
+    ##  [1]  2  1  3  4 NA  5  6  0  8  7 10
+
+``` r
+nicolePlot1 <- ggplot(aes(x= Bedrooms), data = ames) +
+  geom_bar(na.rm = T) +
+  geom_text(stat = 'count', aes(label = after_stat(count), vjust = -.5)) +
+  labs(
+    title = 'Number of Bedrooms',
+    x = "Number of Bedrooms")
+nicolePlot1
+```
+
+    ## Warning: Removed 447 rows containing non-finite outside the scale range
+    ## (`stat_count()`).
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+The distribution of the number of bedrooms is approximately bell shaped
+with the mode being 3 bedrooms. There are 39 houses with 0 bedrooms. The
+maximum number of bedrooms is 10.
+
+``` r
+filteredAmes <- ames[ames$`Sale Price`<= 1000000 & !is.na(ames$Bedrooms) & ames$`Sale Price`!= 0, ]
+
+nicolePlot2 <- ggplot(filteredAmes, aes(x = factor(Bedrooms), y = `Sale Price`)) +
+  geom_boxplot(na.rm = TRUE) +
+  coord_cartesian(ylim = c(0, 600000)) +
+  labs(
+    x = 'Number of Bedrooms',
+    y = 'Sale Price (USD)',
+    title = 'Sale Price Boxplots: Number of Bedrooms'
+  )
+nicolePlot2
+```
+
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- --> This diagram
+shows that the median sale prices of Ames houses generally increase with
+the number of bedrooms. However, houses with 6 or 7 bedrooms had a lower
+median sale price than houses with 5 or 8 bedrooms. 8 bedroom houses had
+the highest median sale price and the largest IQR of sale prices. Houses
+with 1, 2, 3, or 7 bedrooms all showed fairly small IQRs. There are
+several outliers on the high end (sale price \>= \$1,000,000) that are
+not displayed in this chart for visualization purposes.
+
+``` r
+amesOutliers <- ames[ames$`Sale Price` >= 1000000, ]
+nicolePlot3 <- ggplot(amesOutliers, aes(x = Bedrooms, y = `Sale Price`)) +
+  geom_point() +
+  labs(
+    title = 'Ames Housing Sale Prices (>= $1,000,000) vs Number of Bedrooms',
+    xlab = 'Number of Bedrooms',
+    ylab = 'Sale Price (USD)',
+  )
+nicolePlot3
+```
+
+    ## Warning: Removed 24 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+There does not appear to be a relationship between the number of
+bedrooms and the sale price of houses that sold for over \$1,000,000.
+
+Scott Result: Finished Basement Area
+
+``` r
+summary(ames$`FinishedBsmtArea (sf)`)
+```
+
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    ##    10.0   474.0   727.0   776.7  1011.0  6496.0    2682
+
+``` r
+hist(ames$`FinishedBsmtArea (sf)`,
+     main = "Histogram of Finished Basement Area",
+     xlab = "Finished Basement Area (sq ft)",
+     col = "lightblue",
+     border = "black")
+```
+
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+``` r
+boxplot(ames$`FinishedBsmtArea (sf)`,
+        main = "Boxplot of Finished Basement Area",
+        horizontal = TRUE,
+        col = "lightgreen")
+```
+
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+``` r
+plot(ames$`FinishedBsmtArea (sf)`,
+     ames$`Sale Price`,
+     main = "Finished Basement Area vs Sale Price",
+     xlab = "Finished Basement Area (sq ft)",
+     ylab = "Sale Price",
+     pch = 19,
+     col = "steelblue")
+```
+
+![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- --> The variable
+Finished Basement Area (sf) measures the square footage of finished
+basement space in each home. The histogram shows that the distribution
+is right-skewed, with many homes having smaller finished basement areas
+and fewer homes having very large finished basements. The boxplot
+indicates the presence of some high-value outliers. The scatterplot
+comparing finished basement area and sale price suggests a positive
+relationship: homes with larger finished basement areas tend to have
+higher sale prices. However, the relationship does not appear perfectly
+linear, and other factors likely also influence sale price.
+
+``` r
+cor(ames$`FinishedBsmtArea (sf)`,
+    ames$`Sale Price`,
+    use = "complete.obs")
+```
+
+    ## [1] 0.1780473
+
+This value shows that there is not a strong correlation between having a
+finished basement and the sale price increasing.
+
+``` r
+ames$BasementFinished <- ifelse(
+  ames$`FinishedBsmtArea (sf)` > 0,
+  "Finished",
+  "Not Finished"
+)
+```
+
+``` r
+library(ggplot2)
+
+ggplot(ames, aes(x = BasementFinished)) +
+  geom_bar(fill = "steelblue") +
+  labs(title = "Finished vs Not Finished Basements",
+       x = "Basement Status",
+       y = "Number of Homes") +
+  theme_minimal()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- --> The bar
+chart shows the number of homes with finished versus unfinished
+basements. Most homes in the dataset have a finished basement, while a
+smaller portion have no finished basement area. This suggests that
+finished basements are common among properties in Ames and may
+contribute to differences in sale price.
+>>>>>>> 114eba79dc1fc9b199e25a5bf6b67abcc89fe4b6
 
 Shashank Result: YearBuilt
 
@@ -1117,7 +1293,11 @@ ggplot(ames, aes(x = YearBuilt)) +
     ## Warning: Removed 447 rows containing non-finite outside the scale range
     ## (`stat_bin()`).
 
+<<<<<<< HEAD
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+=======
+![](README_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+>>>>>>> 114eba79dc1fc9b199e25a5bf6b67abcc89fe4b6
 
 YearBuilt vs. Sale Price
 
@@ -1134,7 +1314,11 @@ ggplot(ames, aes(x = YearBuilt, y = `Sale Price`)) +
     ## Warning: Removed 447 rows containing missing values or values outside the scale range
     ## (`geom_point()`).
 
+<<<<<<< HEAD
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+=======
+![](README_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+>>>>>>> 114eba79dc1fc9b199e25a5bf6b67abcc89fe4b6
 
 Does YearBuilt Describe any Oddities Discovered in 3?
 
@@ -1201,6 +1385,155 @@ missing/placeholder sale data.
 
 Pablo Result:
 
+<<<<<<< HEAD
+=======
+``` r
+ames_clean <- ames |>
+  group_by(`Multi Sale`, `Sale Price`) |>
+  mutate(
+    units_in_sale = n(),
+    adjusted_price = ifelse(
+      !is.na(`Multi Sale`),
+      `Sale Price` / units_in_sale,
+      `Sale Price`
+    )
+  ) |>
+  ungroup()
+
+
+ames_clean <- ames_clean |>
+  filter(
+    !is.na(`TotalLivingArea (sf)`),
+    !is.na(`Sale Price`),
+  )
+
+ames_clean <- ames_clean |>
+  filter(
+    adjusted_price > 50,
+    `TotalLivingArea (sf)` > 0,  
+  )
+
+view(ames_clean)
+```
+
+On first glance, the dataset seemed to have many outliers with
+extraordinarily high sale prices for the given property. On further
+inspection, however, it was determined that entries in this dataset that
+were bought as a package are still listed individually, only with the
+Multi Sale flag set to ‘Y’. As a result, the package sales with many
+properties being bought at once listed each property as having the sale
+price of the entire package. This skews the median sale price higher and
+makes data analysis and visualization difficult. To remedy this, I
+mutated the dataset to append an adjusted_price variable that divides
+the total sale price by the number of units sold to get an average
+property sale price for each unit. This only affects entries with a non
+null Multi Sale feature. Additionally, as part of the cleaning process,
+I filtered out entries with null / nonzero TotalLivingArea or null Sale
+Price and only saved entries with an adjusted_price of more than 50, to
+avoid questionable outliers.
+
+``` r
+ggplot(data = ames_clean, aes(x = `TotalLivingArea (sf)`)) +
+  geom_histogram(binwidth = 100)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- --> The result
+of the data cleaning is a satisfactory right skewed histogram that shows
+most properties as having between 1000 and 2000 square feet of total
+living area.
+
+``` r
+# priceHist <- filter(ames_clean, `adjusted_price` > 900)
+ggplot(data = ames, aes(x = `Sale Price`)) +
+  geom_histogram(binwidth = 10000)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+
+``` r
+ggplot(data = ames_clean, aes(x = `adjusted_price`)) +
+  geom_histogram(binwidth = 10000)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-27-2.png)<!-- -->
+
+``` r
+outlier <- ames_clean
+  # filter(`adjusted_price` < 50000)
+outlier |>
+  select(Address, Style, `Sale Date`, `Sale Price`, `Multi Sale`, `adjusted_price`) |>
+  arrange(`adjusted_price`) |>
+  view()
+
+multi_sales_collapsed <- ames_clean |>
+  filter(`Multi Sale` == "Y") |>
+  group_by(`Sale Date`, `Sale Price`) |>
+  summarise(
+    address_example = first(Address),
+    units_in_sale = n(),
+    average_price = first(adjusted_price),
+    .groups = "drop"
+  ) |>
+  filter(units_in_sale > 1) |>
+  arrange(desc(`units_in_sale`))
+head(multi_sales_collapsed, 15)
+```
+
+    ## # A tibble: 8 × 5
+    ##   `Sale Date` `Sale Price` address_example           units_in_sale average_price
+    ##   <date>             <dbl> <chr>                             <int>         <dbl>
+    ## 1 2022-05-26      20500000 416 BILLY SUNDAY RD UNIT…           188       109043.
+    ## 2 2022-03-01      14200000 4912 MORTENSEN RD UNIT 1…           144        98611.
+    ## 3 2022-04-01       1100000 908 DOUGLAS AVE UNIT 1, …            12        91667.
+    ## 4 2022-07-18       1370000 3315 ROY KEY AVE UNIT 2,…            12       114167.
+    ## 5 2022-01-01        909600 4524 STEINBECK ST UNIT 1…             8       113700 
+    ## 6 2022-02-22        610000 216 S SHERMAN AVE, AMES               4       152500 
+    ## 7 2022-03-31        465000 1425 STAFFORD AVE, AMES               3       155000 
+    ## 8 2022-05-31        475000 103 WILMOTH AVE, AMES                 3       118750
+
+The before and after histograms of the Sale Price also demonstrate the
+effect of the data cleaning. The second histogram avoids the outlier
+issues that the original dataset has, namely the huge amount of
+properties with a sale price of 0 that throws off the scale of the
+chart, and the two large package sales of \$14.2m and \$20.5m that has a
+similar effect. The largest package sales can be seen in the dataframe
+above. Note that the cleaned histogram sees large spikes in count at
+\$109k and \$98k due to the two largest package sales that include 188
+and 144 units in sale respectively.
+
+``` r
+ggplot(data = ames, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+    ## Warning: Removed 447 rows containing non-finite outside the scale range
+    ## (`stat_smooth()`).
+
+    ## Warning: Removed 447 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
+
+``` r
+ggplot(data = ames_clean, aes(x = `TotalLivingArea (sf)`, y = `adjusted_price`)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](README_files/figure-gfm/unnamed-chunk-28-2.png)<!-- -->
+
+The end result is that we can observe a positive correlation between
+TotalLivingArea and adjusted_price in the scatterplot with cleaned data,
+as expected. As a property gets bigger, it’s price should increase as
+it’s more desirable. The scatterplots using both the original dataset
+and the cleaned dataset are provided as reference.
+
+>>>>>>> 114eba79dc1fc9b199e25a5bf6b67abcc89fe4b6
 Follow the instructions posted at
 <https://ds202-at-isu.github.io/labs.html> for the lab assignment. The
 work is meant to be finished during the lab time, but you have time
