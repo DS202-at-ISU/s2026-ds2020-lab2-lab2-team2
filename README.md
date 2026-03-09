@@ -228,12 +228,13 @@ unique(ames$Bedrooms)
     ##  [1]  2  1  3  4 NA  5  6  0  8  7 10
 
 ``` r
-ggplot(aes(x= Bedrooms), data = ames) +
+nicolePlot1 <- ggplot(aes(x= Bedrooms), data = ames) +
   geom_bar(na.rm = T) +
   geom_text(stat = 'count', aes(label = after_stat(count), vjust = -.5)) +
   labs(
     title = 'Number of Bedrooms',
     x = "Number of Bedrooms")
+nicolePlot1
 ```
 
     ## Warning: Removed 447 rows containing non-finite outside the scale range
@@ -248,7 +249,7 @@ maximum number of bedrooms is 10.
 ``` r
 filteredAmes <- ames[ames$`Sale Price`<= 1000000 & !is.na(ames$Bedrooms) & ames$`Sale Price`!= 0, ]
 
-ggplot(filteredAmes, aes(x = factor(Bedrooms), y = `Sale Price`)) +
+nicolePlot2 <- ggplot(filteredAmes, aes(x = factor(Bedrooms), y = `Sale Price`)) +
   geom_boxplot(na.rm = TRUE) +
   coord_cartesian(ylim = c(0, 600000)) +
   labs(
@@ -256,6 +257,7 @@ ggplot(filteredAmes, aes(x = factor(Bedrooms), y = `Sale Price`)) +
     y = 'Sale Price (USD)',
     title = 'Sale Price Boxplots: Number of Bedrooms'
   )
+nicolePlot2
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- --> This diagram
@@ -269,13 +271,14 @@ not displayed in this chart for visualization purposes.
 
 ``` r
 amesOutliers <- ames[ames$`Sale Price` >= 1000000, ]
-ggplot(amesOutliers, aes(x = Bedrooms, y = `Sale Price`)) +
+nicolePlot3 <- ggplot(amesOutliers, aes(x = Bedrooms, y = `Sale Price`)) +
   geom_point() +
   labs(
     title = 'Ames Housing Sale Prices (>= $1,000,000) vs Number of Bedrooms',
     xlab = 'Number of Bedrooms',
     ylab = 'Sale Price (USD)',
   )
+nicolePlot3
 ```
 
     ## Warning: Removed 24 rows containing missing values or values outside the scale range
